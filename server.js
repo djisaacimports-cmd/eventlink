@@ -244,7 +244,6 @@ textarea{resize:vertical;}
       </div>
     </div>
   </div>
-  </div>
 
   <!-- ═══ SCAN TAB ═══ -->
   <div id="tab-scan" style="display:none;">
@@ -321,7 +320,6 @@ textarea{resize:vertical;}
   <div style="font-size:0.78rem;color:#8a7a62;line-height:1.8;">
     <div style="font-family:Georgia,serif;font-size:0.9rem;color:#3d2b0e;margin-bottom:4px;">Developed by <strong>Dibo Jaradeh</strong></div>
     If this app saved you time, consider supporting Kol Yaakab above 🙏
-  </div>
   </div>
 </div>
 
@@ -786,5 +784,6 @@ var PORT = process.env.PORT || 3000;
 server.listen(PORT, function() {
   console.log('EventLink running on port ' + PORT);
 });
+
 
 
