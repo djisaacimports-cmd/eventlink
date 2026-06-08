@@ -82,6 +82,16 @@ const HTML = `<!DOCTYPE html>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>EventLink</title>
+<link rel="manifest" href="/manifest.json"/>
+<meta name="theme-color" content="#3d2b0e"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="EventLink"/>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{--gold:#b8922a;--warm:#3d2b0e;--cream:#faf7f2;--border:#ddd3bb;--muted:#8a7a62;--green:#2d6a4f;}
@@ -762,6 +772,55 @@ const server = http.createServer(function(req, res) {
     return;
   }
 
+  // Serve PWA manifest
+  if (parsed.pathname === '/manifest.json') {
+    res.setHeader('Content-Type', 'application/json');
+    res.writeHead(200);
+    res.end(`{
+  "name": "EventLink",
+  "short_name": "EventLink",
+  "description": "Smart calendar invitations for any occasion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf7f2",
+  "theme_color": "#3d2b0e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+`);
+    return;
+  }
+
+  // Serve service worker
+  if (parsed.pathname === '/sw.js') {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.writeHead(200);
+    res.end(`self.addEventListener('install', function(e) {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function(e) {
+  return self.clients.claim();
+});
+
+self.addEventListener('fetch', function(e) {
+  e.respondWith(fetch(e.request));
+});
+`);
+    return;
+  }
+
   // Serve ICS file
   if (parsed.pathname === '/cal') {
     var ics = buildICS(parsed.query);
@@ -784,6 +843,3 @@ var PORT = process.env.PORT || 3000;
 server.listen(PORT, function() {
   console.log('EventLink running on port ' + PORT);
 });
-
-
-
