@@ -299,10 +299,9 @@ textarea{resize:vertical;}
       </div>
     </div>
   </div>
-</div>
 
-<!-- FOOTER -->
-<div style="margin-top:40px;padding:24px 16px;background:#fffdf8;border-top:1px solid #ddd3bb;text-align:center;">
+  <!-- FOOTER -->
+  <div style="margin-top:40px;padding:24px 16px;background:#fffdf8;border-top:1px solid #ddd3bb;border-radius:8px;text-align:center;">
 
   <!-- Charity section -->
   <div style="background:#fff8e6;border:1px solid #b8922a;border-radius:8px;padding:20px 16px;margin-bottom:20px;">
@@ -322,6 +321,7 @@ textarea{resize:vertical;}
   <div style="font-size:0.78rem;color:#8a7a62;line-height:1.8;">
     <div style="font-family:Georgia,serif;font-size:0.9rem;color:#3d2b0e;margin-bottom:4px;">Developed by <strong>Dibo Jaradeh</strong></div>
     If this app saved you time, consider supporting Kol Yaakab above 🙏
+  </div>
   </div>
 </div>
 
