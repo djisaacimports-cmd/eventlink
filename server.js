@@ -160,7 +160,7 @@ textarea{resize:vertical;}
         <label class="lbl">Venue / Location</label>
         <div class="chips" id="venue-chips">
           <button class="chip" onclick="pickChip(this,'c-location','venue-chips')">Shaare Zion</button>
-          <button class="chip" onclick="pickChip(this,'c-location','venue-chips')">Kol Yaakov</button>
+          <button class="chip" onclick="pickChip(this,'c-location','venue-chips')">Kol Yaakab</button>
           <button class="chip" onclick="pickChip(this,'c-location','venue-chips')">SLC Congregation</button>
           <button class="chip" onclick="pickChip(this,'c-location','venue-chips')">Har Halebanon</button>
           <button class="chip" onclick="pickChip(this,'c-location','venue-chips')">Shevet Achim</button>
@@ -301,11 +301,35 @@ textarea{resize:vertical;}
   </div>
 </div>
 
+<!-- FOOTER -->
+<div style="margin-top:40px;padding:24px 16px;background:#fffdf8;border-top:1px solid #ddd3bb;text-align:center;">
+
+  <!-- Charity section -->
+  <div style="background:#fff8e6;border:1px solid #b8922a;border-radius:8px;padding:20px 16px;margin-bottom:20px;">
+    <div style="font-size:1.3rem;margin-bottom:6px;">🕍</div>
+    <div style="font-family:Georgia,serif;font-size:1.1rem;font-weight:600;color:#3d2b0e;margin-bottom:8px;">Support Kol Yaakab</div>
+    <div style="font-size:0.82rem;color:#8a7a62;line-height:1.7;margin-bottom:16px;">
+      Kol Yaakab is a Torah institution dedicated to helping families who cannot afford yeshiva tuition. Every donation goes directly to ensuring that no child is turned away from a Jewish education due to financial hardship. Your generosity makes a real difference.
+    </div>
+    <a href="https://secure.cardknox.com/hkykolyaakab" target="_blank"
+      style="display:block;padding:14px;background:#b8922a;color:white;border-radius:6px;text-decoration:none;font-weight:700;font-size:0.95rem;margin-bottom:10px;">
+      ❤️ Donate to Kol Yaakab
+    </a>
+    <div style="font-size:0.75rem;color:#8a7a62;">Credit card accepted via secure payment link</div>
+  </div>
+
+  <!-- Developer credit -->
+  <div style="font-size:0.78rem;color:#8a7a62;line-height:1.8;">
+    <div style="font-family:Georgia,serif;font-size:0.9rem;color:#3d2b0e;margin-bottom:4px;">Developed by <strong>Dibo Jaradeh</strong></div>
+    If this app saved you time, consider supporting Kol Yaakab above 🙏
+  </div>
+</div>
+
 <script>
 // ── Venues & Messages ─────────────────────────────────────
 var VENUES = {
   'Shaare Zion':      'Congregation Shaare Zion, 2030 Ocean Pkwy, Brooklyn, NY 11223',
-  'Kol Yaakov':       'Kol Yaakov, 1703 McDonald Ave, Brooklyn, NY 11230',
+  'Kol Yaakab':       'Kol Yaakab, 1703 McDonald Ave, Brooklyn, NY 11230',
   'SLC Congregation': 'SLC Congregation, 805 Avenue T, Brooklyn, NY 11223',
   'Har Halebanon':    'Congregation Har Halebanon, 820 Ave. S, Brooklyn, NY 11223',
   'Shevet Achim':     'Congregation Shevet Achim, 704-708 Avenue T, Brooklyn, NY 11223'
@@ -414,7 +438,7 @@ function buildICS(f, rems) {
   if (f.desc) descParts.push(f.desc);
   if (f.dress) descParts.push('Dress Code: ' + f.dress);
   if (f.hosted) descParts.push('Hosted by: ' + f.hosted);
-  var desc = descParts.join('\\\\n');
+  var desc = descParts.join('\\n');
   var lines = [
     'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//EventLink//EN',
     'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
@@ -438,7 +462,7 @@ function buildICS(f, rems) {
   }
   lines.push('END:VEVENT');
   lines.push('END:VCALENDAR');
-  return lines.join('\\r\\n');
+  return lines.join('\r\n');
 }
 
 function buildGoogleUrl(f, rems) {
@@ -453,12 +477,12 @@ function buildGoogleUrl(f, rems) {
   if (f.desc) descParts.push(f.desc);
   if (f.dress) descParts.push('Dress Code: ' + f.dress);
   if (f.hosted) descParts.push('Hosted by: ' + f.hosted);
-  if (remLabels.length) descParts.push('\\n⏰ Reminders: ' + remLabels.join(', ') + ' before');
+  if (remLabels.length) descParts.push('\n⏰ Reminders: ' + remLabels.join(', ') + ' before');
   var p = new URLSearchParams({
     action: 'TEMPLATE', text: f.name,
     dates: startDT + '/' + endDT,
     location: f.location || '',
-    details: descParts.join('\\n')
+    details: descParts.join('\n')
   });
   return 'https://calendar.google.com/calendar/render?' + p.toString();
 }
@@ -470,7 +494,7 @@ function doDownload(f, rems) {
   var a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
-  a.download = (f.name || 'event').replace(/\\s+/g, '-') + '.ics';
+  a.download = (f.name || 'event').replace(/\s+/g, '-') + '.ics';
   document.body.appendChild(a);
   a.click();
   setTimeout(function() {
@@ -582,17 +606,17 @@ function generate() {
   var googleUrl = buildGoogleUrl(cFields, rems);
   var emoji = typeLabel.indexOf('Wedding') >= 0 ? '💍' : '🎉';
 
-  var msg = emoji + " You're invited to " + name + "!\\n";
-  if (cFields.hosted) msg += "Hosted by " + cFields.hosted + "\\n";
-  msg += "\\n📅 " + fmtDate(date) + " at " + fmtTime(cFields.time);
+  var msg = emoji + " You're invited to " + name + "!\n";
+  if (cFields.hosted) msg += "Hosted by " + cFields.hosted + "\n";
+  msg += "\n📅 " + fmtDate(date) + " at " + fmtTime(cFields.time);
   if (cFields.endTime) msg += " – " + fmtTime(cFields.endTime);
-  msg += "\\n📍 " + (cFields.location || 'Location TBD');
-  if (cFields.dress) msg += "\\n👗 Dress Code: " + cFields.dress;
-  if (cFields.desc) msg += "\\n\\n" + cFields.desc;
-  if (remLabels.length) msg += "\\n\\n🔔 Reminders: " + remLabels.join(', ') + " before";
-  msg += "\\n\\nSee you there! 🥂";
-  msg += "\\n\\n📲 Save to your calendar:";
-  msg += "\\n🤖 Android: " + googleUrl;
+  msg += "\n📍 " + (cFields.location || 'Location TBD');
+  if (cFields.dress) msg += "\n👗 Dress Code: " + cFields.dress;
+  if (cFields.desc) msg += "\n\n" + cFields.desc;
+  if (remLabels.length) msg += "\n\n🔔 Reminders: " + remLabels.join(', ') + " before";
+  msg += "\n\nSee you there! 🥂";
+  msg += "\n\n📲 Save to your calendar:";
+  msg += "\n🤖 Android: " + googleUrl;
   // iPhone: build a real server URL that returns the .ics file
   var rems = getRems('rem-chips');
   var iphoneParams = new URLSearchParams({
@@ -611,7 +635,7 @@ function generate() {
   document.getElementById('android-link').value = googleUrl;
   document.getElementById('iphone-link').value = iphoneUrl;
 
-  msg += "\\n🍎 iPhone link & 🤖 Android link below ↓";
+  msg += "\n🍎 iPhone link & 🤖 Android link below ↓";
 
   document.getElementById('c-msg').value = msg;
 
@@ -657,8 +681,8 @@ function parseInvite(t) {
   else if (/party|celebration/i.test(t)) name = 'Celebration';
 
   var date = '';
-  var dm = t.match(/([A-Za-z]+)\\s+(\\d{1,2})(?:st|nd|rd|th)?[,\\s]+(\\d{4})/i) ||
-            t.match(/([A-Za-z]+)\\s+(\\d{1,2})(?:st|nd|rd|th)?/i);
+  var dm = t.match(/([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?[,\s]+(\d{4})/i) ||
+            t.match(/([A-Za-z]+)\s+(\d{1,2})(?:st|nd|rd|th)?/i);
   if (dm) {
     var mo = MONTHS[dm[1].toLowerCase()];
     if (mo) {
@@ -668,26 +692,26 @@ function parseInvite(t) {
   }
 
   var time = '';
-  var tm = t.match(/(\\d{1,2})(?::(\\d{2}))?\\s*(a\\.?m\\.?|p\\.?m\\.?)/i);
+  var tm = t.match(/(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)/i);
   if (tm) {
     var h = parseInt(tm[1]);
     var m = tm[2] ? parseInt(tm[2]) : 0;
-    var ap = tm[3].replace(/\\./g,'').toLowerCase();
+    var ap = tm[3].replace(/\./g,'').toLowerCase();
     if (ap === 'pm' && h < 12) h += 12;
     if (ap === 'am' && h === 12) h = 0;
     time = pad(h) + ':' + pad(m);
   }
 
   var location = '';
-  var lm2 = t.match(/\\d+\\s+[A-Za-z0-9\\s\\.]+(?:street|st|avenue|ave|blvd|road|rd|drive|dr|place|pl|way|court|ct)[^\\n]*/i);
+  var lm2 = t.match(/\d+\s+[A-Za-z0-9\s\.]+(?:street|st|avenue|ave|blvd|road|rd|drive|dr|place|pl|way|court|ct)[^\n]*/i);
   if (lm2) location = lm2[0].trim();
 
   var hosted = '';
-  var hm = t.match(/([A-Z][a-z]+\\s+(?:&|and)\\s+[A-Z][a-z]+\\s+[A-Z][a-z]+)/);
+  var hm = t.match(/([A-Z][a-z]+\s+(?:&|and)\s+[A-Z][a-z]+\s+[A-Z][a-z]+)/);
   if (hm) hosted = hm[1].trim();
 
   var dress = '';
-  var drm = t.match(/dress.code[:\\s]+([^\\n]+)/i) || t.match(/(black.tie|white.tie|formal|cocktail)/i);
+  var drm = t.match(/dress.code[:\s]+([^\n]+)/i) || t.match(/(black.tie|white.tie|formal|cocktail)/i);
   if (drm) dress = drm[1].trim();
 
   return {name:name, date:date, time:time, endTime:'', location:location, hosted:hosted, dress:dress, desc:''};
@@ -762,4 +786,5 @@ var PORT = process.env.PORT || 3000;
 server.listen(PORT, function() {
   console.log('EventLink running on port ' + PORT);
 });
+
 
